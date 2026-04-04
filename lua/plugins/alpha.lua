@@ -29,7 +29,7 @@ return {
       dashboard.button("n", "󰈔  New file", ":ene <BAR> startinsert <CR>"),
       dashboard.button("r", "󰋚  Recent files", ":lua Snacks.picker.recent()<CR>"),
       dashboard.button("g", "󱎸  Find text", ":lua Snacks.picker.grep()<CR>"),
-      dashboard.button("c", "󱁻  Configuration", ":lua MiniFiles.open(vim.fn.stdpath('config') .. '/init.lua')<CR>"),
+      dashboard.button("c", "󱁻  Configuration", ":lua require('oil').open_float(vim.fn.stdpath('config'))<CR>"),
       dashboard.button("u", "󰚰  Update plugins", ":Lazy sync <CR>"),
       dashboard.button("q", "󰗼  Quit", ":qa<CR>"),
     }
