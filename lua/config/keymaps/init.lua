@@ -40,6 +40,15 @@ keymap.set("n", "#", function()
   vim.opt.hlsearch = true
   hlslens.start()
 end, opts)
+
+-- VScodeを開く
+keymap.set("n", "<leader>o", function()
+  local file = vim.fn.expand("%:p")
+  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+  local dir = (vim.v.shell_error == 0 and git_root) or vim.fn.getcwd()
+  vim.fn.jobstart({ "code", dir, file }, { detach = true })
+end, { desc = "open in VSCode" })
+
 -- Lazy.nvim
 keymap.set("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "open Lazy.nvim" })
 keymap.set("n", "<leader>lu", "<cmd>Lazy update<cr>", { desc = "open Lazy update" })
