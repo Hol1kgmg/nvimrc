@@ -28,6 +28,7 @@ return {
         { mode = "n", keys = "<leader>m", desc = "+Make Action" },
         { mode = "n", keys = "<Leader>i", desc = "+Info-View" },
         { mode = "n", keys = "<Leader>h", desc = "+Hunk" },
+        { mode = "n", keys = "<Leader>o", desc = "open in VSCode"},
 
         { mode = "n", keys = "gd",        desc = "go to definition" },
         { mode = "n", keys = "gr",        desc = "find references" },
