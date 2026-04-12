@@ -7,7 +7,11 @@ return {
     { "dr", "<cmd>Trouble lsp_references toggle<cr>", desc = "References" },
     { "di", "<cmd>Trouble lsp_implementations toggle<cr>", desc = "Implementation" },
     { "dE", "<cmd>Trouble lsp_definitions toggle<cr>", desc = "Definition" },
-    { "<CR>", "<cmd>Trouble lsp_definitions toggle<cr>", desc = "Definition" },
+    { "<CR>", function ()
+      if vim.bo.buftype ~= "terinal" then
+        vim.cmd("Trouble lsp_definitions toggle")
+      end
+    end, desc = "Definitions" },
     { "dt", "<cmd>Trouble lsp_type_definitions toggle<cr>", desc = "Type Definitions" },
     { "ds", "<cmd>Trouble symbols toggle<cr>", desc = "Document Symbols" },
     { "dc", "<cmd>Trouble lsp_incoming_calls toggle<cr>", desc = "Incoming Calls" },
