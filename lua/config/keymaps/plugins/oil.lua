@@ -22,8 +22,8 @@ M.keymaps = {
 
 -- バッファ固有のキーマップ設定（autocmd用）
 M.setup_buffer_keymaps = function(bufnr)
-  vim.keymap.set("n", "J", "j", { buffer = bufnr, desc = "move down" })
-  vim.keymap.set("n", "K", "k", { buffer = bufnr, desc = "move up" })
+  vim.keymap.set("n", "J", "10j", { buffer = bufnr, desc = "10j 移動" })
+  vim.keymap.set("n", "K", "10k", { buffer = bufnr, desc = "10k 移動" })
 end
 
 return M
