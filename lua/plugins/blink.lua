@@ -8,6 +8,11 @@ return {
   event = { "InsertEnter", "CmdLineEnter" },
   config = function()
     require('blink.cmp').setup({
+      -- oil.nvim等の行数が少ない特殊バッファでは無効化
+      enabled = function()
+        return vim.bo.filetype ~= 'oil'
+      end,
+
       -- キーマップ設定（デフォルト使用）
       -- カスタマイズ方法: https://cmp.saghen.dev/configuration/keymap.html#default
       keymap = { preset = 'super-tab' },
