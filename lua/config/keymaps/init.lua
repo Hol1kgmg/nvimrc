@@ -167,6 +167,33 @@ keymap.set("n", "<leader>ih", "<cmd>HealthCheck<cr>", { desc = "health check (sa
 -- Keymap検索
 keymap.set("n", "<leader>ik", "<cmd>KeymapInfo<cr>", { desc = "inspect keymap" })
 
+
+-- ============================================================
+-- Markdown View
+-- ============================================================
+
+-- Markdown View Tool(Leaf)を使用
+-- leafで現在のファイルを開く
+keymap.set("n", "<leader>mm", function()
+  vim.cmd("startinsert")
+  if vim.bo.filetype == "markdown" then
+    local file = vim.fn.expand("%:p")
+    vim.cmd("terminal leaf " .. file)
+  else
+    vim.cmd("terminal leaf")
+  end
+end, { desc = "make view .md" })
+
+-- weztermの右pane(size 50%)でleafを開く
+keymap.set("n", "<leader>ml", function()
+  if vim.bo.filetype == "markdown" then
+    local file = vim.fn.expand("%:p")
+    vim.fn.jobstart({ "wezterm", "cli", "split-pane", "--right", "--", "leaf", file }, { detach = true })
+  else
+    vim.fn.jobstart({ "wezterm", "cli", "split-pane", "--right", "--", "leaf" }, { detach = true })
+  end
+end, { desc = "make view .md at r-pane" })
+
 -- ============================================================
 -- PLUGIN DEFAULTS (ドキュメント)
 -- ============================================================
