@@ -34,21 +34,6 @@ return {
       dashboard.button("q", "󰗼  Quit", ":qa<CR>"),
     }
 
-    local function is_empty_buffer()
-      return vim.bo.buftype == ""
-        and vim.fn.expand("%") == ""
-        and vim.fn.line("$") == 1
-        and vim.fn.getline(1) == ""
-    end
-
-    local function show_alpha_if_empty()
-      vim.schedule(function()
-        if is_empty_buffer() then
-          require("alpha").start()
-        end
-      end)
-    end
-
     local augroup = vim.api.nvim_create_augroup("AlphaConfig", { clear = true })
 
     vim.api.nvim_create_autocmd("FileType", {
@@ -62,7 +47,7 @@ return {
       end,
     })
 
-    vim.api.nvim_create_autocmd({"BufEnter", "WinEnter"}, {
+    vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
       group = augroup,
       callback = function()
         if vim.bo.filetype ~= "alpha" then
@@ -71,29 +56,25 @@ return {
       end,
     })
 
-    vim.api.nvim_create_autocmd("FileType", {
+    -- 空の無名バッファに入った瞬間にダッシュボードへ切り替える
+    -- （Lazy同期後・最後バッファ削除後など、あらゆるケースで「*」バッファの代わりに表示）
+    vim.api.nvim_create_autocmd("BufEnter", {
       group = augroup,
-      pattern = "lazy",
       callback = function()
-        vim.api.nvim_create_autocmd("BufWinLeave", {
-          group = augroup,
-          buffer = 0,
-          once = true,
-          callback = show_alpha_if_empty,
-        })
-      end,
-    })
-
-    vim.api.nvim_create_autocmd("BufDelete", {
-      group = augroup,
-      callback = function(event)
-        local buftype = vim.bo[event.buf].buftype
-        if buftype ~= "" then
-          return
-        end
-        local listed_bufs = vim.fn.getbufinfo({ buflisted = 1 })
-        if #listed_bufs <= 1 then
-          show_alpha_if_empty()
+        local buf = vim.api.nvim_get_current_buf()
+        if vim.fn.expand("%") == ""
+          and vim.bo.buftype == ""
+          and vim.bo.modified == false
+          and vim.fn.line("$") == 1
+          and vim.fn.getline(1) == ""
+        then
+          require("alpha").start(false)
+          -- alpha描画完了後に空バッファを削除（先に削除するとalphaと競合する）
+          vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype ~= "alpha" then
+              vim.api.nvim_buf_delete(buf, { force = true })
+            end
+          end)
         end
       end,
     })
