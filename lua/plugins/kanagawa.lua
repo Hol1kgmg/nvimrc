@@ -11,23 +11,12 @@ return {
       keywordStyle = { italic = true },
       statementStyle = { bold = true },
       typeStyle = {},
-      transparent = true, -- 背景を透過する
+      transparent = false,
       dimInactive = false, -- 非アクティブウィンドウを暗くしない
       terminalColors = true,
-      colors = {
-        theme = {
-          all = {
-            ui = {
-              bg_gutter = "none", -- 行番号背景を透明に
-            },
-          },
-        },
-      },
+      colors = {},
       overrides = function(_colors)
-        return {
-          NormalFloat = { bg = "none" },
-          FloatBorder = { bg = "none" },
-        }
+        return {}
       end,
     })
     -- カラースキームを適用
