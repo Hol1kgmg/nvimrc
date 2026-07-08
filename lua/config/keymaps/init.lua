@@ -49,6 +49,22 @@ keymap.set("n", "<leader>o", function()
   vim.fn.jobstart({ "code", dir, file }, { detach = true })
 end, { desc = "open in VSCode" })
 
+-- デフォルトブラウザで現在のファイルを開く
+keymap.set("n", "<leader>O", function()
+  local file = vim.fn.expand("%:p")
+  if file == "" then
+    vim.notify("No file to open", vim.log.levels.WARN)
+    return
+  end
+  require("default-browser").get(function(name, err)
+    if err then
+      vim.notify("default-browser: " .. err, vim.log.levels.ERROR)
+      return
+    end
+    vim.fn.jobstart({ "open", "-a", name, file }, { detach = true })
+  end)
+end, { desc = "open in default browser" })
+
 -- Lazy.nvim
 keymap.set("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "open Lazy.nvim" })
 keymap.set("n", "<leader>lu", "<cmd>Lazy update<cr>", { desc = "open Lazy update" })
@@ -173,17 +189,6 @@ keymap.set("n", "<leader>ik", "<cmd>KeymapInfo<cr>", { desc = "inspect keymap" }
 -- ============================================================
 
 -- Markdown View Tool(Leaf)を使用
--- leafで現在のファイルを開く
-keymap.set("n", "<leader>mm", function()
-  vim.cmd("startinsert")
-  if vim.bo.filetype == "markdown" then
-    local file = vim.fn.expand("%:p")
-    vim.cmd("terminal leaf " .. file)
-  else
-    vim.cmd("terminal leaf")
-  end
-end, { desc = "make view .md" })
-
 -- weztermの右pane(size 50%)でleafを開く
 keymap.set("n", "<leader>ml", function()
   if vim.bo.filetype == "markdown" then
