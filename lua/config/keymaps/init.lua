@@ -188,40 +188,42 @@ keymap.set("n", "<leader>ik", "<cmd>KeymapInfo<cr>", { desc = "inspect keymap" }
 -- Markdown View
 -- ============================================================
 
+-- moを使わず、ブラウザの拡張機能で対応するため、コメントアウト
+
 -- Markdown View Tool(k1LoW/mo)を使用
 -- セッションをクリアしてから現在のファイルをブラウザで開く
-keymap.set("n", "<leader>mm", function()
-  if vim.bo.filetype ~= "markdown" then
-    vim.notify("Not a markdown file", vim.log.levels.WARN)
-    return
-  end
-  if vim.fn.executable("mo") == 0 then
-    vim.notify("k1LoW/mo is not installed", vim.log.levels.ERROR)
-    return
-  end
-  local file = vim.fn.expand("%:p")
-
-  -- mo --clear の確認プロンプトに stdin で y を応答
-  local clear_job = vim.fn.jobstart({ "mo", "--clear" }, {
-    on_exit = function()
-      -- --clear によるサーバー再起動は非同期に進むため、
-      -- 完了を待ってから開く(即時だと旧サーバーに追加されて消える)
-      vim.defer_fn(function()
-        vim.fn.jobstart({ "mo", file }, {
-          -- stdinがパイプだと mo がファイル引数を受け付けないため null にする
-          stdin = "null",
-          on_exit = function(_, code)
-            if code ~= 0 then
-              vim.notify("mo: failed to open " .. file, vim.log.levels.ERROR)
-            end
-          end,
-        })
-      end, 500)
-    end,
-  })
-  vim.fn.chansend(clear_job, "y\n")
-  vim.fn.chanclose(clear_job, "stdin")
-end, { desc = "markdown view" })
+-- keymap.set("n", "<leader>mm", function()
+--   if vim.bo.filetype ~= "markdown" then
+--     vim.notify("Not a markdown file", vim.log.levels.WARN)
+--     return
+--   end
+--   if vim.fn.executable("mo") == 0 then
+--     vim.notify("k1LoW/mo is not installed", vim.log.levels.ERROR)
+--     return
+--   end
+--   local file = vim.fn.expand("%:p")
+--
+--   -- mo --clear の確認プロンプトに stdin で y を応答
+--   local clear_job = vim.fn.jobstart({ "mo", "--clear" }, {
+--     on_exit = function()
+--       -- --clear によるサーバー再起動は非同期に進むため、
+--       -- 完了を待ってから開く(即時だと旧サーバーに追加されて消える)
+--       vim.defer_fn(function()
+--         vim.fn.jobstart({ "mo", file }, {
+--           -- stdinがパイプだと mo がファイル引数を受け付けないため null にする
+--           stdin = "null",
+--           on_exit = function(_, code)
+--             if code ~= 0 then
+--               vim.notify("mo: failed to open " .. file, vim.log.levels.ERROR)
+--             end
+--           end,
+--         })
+--       end, 500)
+--     end,
+--   })
+--   vim.fn.chansend(clear_job, "y\n")
+--   vim.fn.chanclose(clear_job, "stdin")
+-- end, { desc = "markdown view" })
 
 -- ============================================================
 -- PLUGIN DEFAULTS (ドキュメント)
