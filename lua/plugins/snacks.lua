@@ -44,6 +44,7 @@ return {
 
     -- オプション機能
     bigfile = { enabled = true }, -- 大規模ファイル対応
+    image = { enabled = false }, -- 画像プレビュー（要ImageMagick）
     zen = {
       enabled = true,
     },

@@ -17,6 +17,15 @@ return {
       "lua",
       "markdown",
       "nix",
+      -- Snacks.image のドキュメント内画像レンダリング用
+      "css",
+      "javascript",
+      "latex",
+      "norg",
+      "scss",
+      "svelte",
+      "typst",
+      "vue",
     },
     -- シンタックスハイライト
     highlight = {
