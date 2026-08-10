@@ -14,12 +14,13 @@ See [DIRECTORY_STRUCTURE.md](./DIRECTORY_STRUCTURE.md) for details.
 3. Start implementation
 
 # Tool Usage Policy
-**Always use dedicated tools for file operations:**
-- File reading → `Read` tool
-- File search → `Glob` tool
-- Content search → `Grep` tool
-- File editing → `Edit` tool
+**Prefer dedicated tools for file operations by default** (not enforced via `permissions.deny` — occasional Bash use is fine when it's genuinely more convenient):
+- `ls`, `find` → `Glob` tool
+- `cat`, `head`, `tail` → `Read` tool
+- `grep` → `Grep` tool
+- `sed`, `awk` → `Edit` tool
 - File writing → `Write` tool
+- `curl` → `WebFetch` tool
 
 # Language Settings
 - Responses: Japanese
