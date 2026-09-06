@@ -17,6 +17,9 @@ return {
         "lua_ls",          -- Lua
         "marksman",        -- Markdown
         "tailwindcss",     -- Tailwind CSS
+        "cssls",           -- CSS/SCSS/LESS
+        "html",            -- HTML
+        "eslint",          -- ESLint
         -- nixd はnixpkgsで管理
       },
     },

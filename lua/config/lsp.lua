@@ -166,8 +166,46 @@ vim.lsp.config.tailwindcss = {
   },
 }
 
+-- CSS/SCSS/LESS
+vim.lsp.config.cssls = {
+  cmd = { "vscode-css-language-server", "--stdio" },
+  filetypes = { "css", "scss", "less" },
+  root_dir = git_root,
+  on_attach = on_attach,
+  settings = {
+    -- @custom-media / var(--custom-media)未対応による誤検知を抑制
+    css = { validate = true, lint = { unknownAtRules = "ignore" } },
+    scss = { validate = true, lint = { unknownAtRules = "ignore" } },
+    less = { validate = true, lint = { unknownAtRules = "ignore" } },
+  },
+}
+
+-- HTML
+vim.lsp.config.html = {
+  cmd = { "vscode-html-language-server", "--stdio" },
+  filetypes = { "html" },
+  root_dir = git_root,
+  on_attach = on_attach,
+}
+
+-- ESLint
+vim.lsp.config.eslint = {
+  cmd = { "vscode-eslint-language-server", "--stdio" },
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+  root_dir = vim.fs.root(0, {
+    ".eslintrc.js",
+    ".eslintrc.cjs",
+    ".eslintrc.json",
+    ".eslintrc",
+    "eslint.config.js",
+    "eslint.config.mjs",
+    "eslint.config.cjs",
+  }),
+  on_attach = on_attach,
+}
+
 -- 全LSPサーバーを有効化
-local servers = { "ts_ls", "pyright", "nixd", "yamlls", "taplo", "jsonls", "vimls", "lua_ls", "marksman", "tailwindcss" }
+local servers = { "ts_ls", "pyright", "nixd", "yamlls", "taplo", "jsonls", "vimls", "lua_ls", "marksman", "tailwindcss", "cssls", "html", "eslint" }
 for _, server in ipairs(servers) do
   vim.lsp.enable(server)
 end
