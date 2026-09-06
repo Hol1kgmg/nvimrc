@@ -188,24 +188,11 @@ vim.lsp.config.html = {
   on_attach = on_attach,
 }
 
--- ESLint
-vim.lsp.config.eslint = {
-  cmd = { "vscode-eslint-language-server", "--stdio" },
-  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
-  root_dir = vim.fs.root(0, {
-    ".eslintrc.js",
-    ".eslintrc.cjs",
-    ".eslintrc.json",
-    ".eslintrc",
-    "eslint.config.js",
-    "eslint.config.mjs",
-    "eslint.config.cjs",
-  }),
-  on_attach = on_attach,
-}
+-- ESLint は esmuellert/nvim-eslint プラグインが専用LSPクライアントとして提供するため、
+-- ここでは設定しない（lua/plugins/nvim-eslint.lua参照）
 
 -- 全LSPサーバーを有効化
-local servers = { "ts_ls", "pyright", "nixd", "yamlls", "taplo", "jsonls", "vimls", "lua_ls", "marksman", "tailwindcss", "cssls", "html", "eslint" }
+local servers = { "ts_ls", "pyright", "nixd", "yamlls", "taplo", "jsonls", "vimls", "lua_ls", "marksman", "tailwindcss", "cssls", "html" }
 for _, server in ipairs(servers) do
   vim.lsp.enable(server)
 end

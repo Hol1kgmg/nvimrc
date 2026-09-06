@@ -19,7 +19,7 @@ return {
         "tailwindcss",     -- Tailwind CSS
         "cssls",           -- CSS/SCSS/LESS
         "html",            -- HTML
-        "eslint",          -- ESLint
+        -- eslint はesmuellert/nvim-eslintプラグインが同梱サーバーを使用するため管理不要
         -- nixd はnixpkgsで管理
       },
     },
