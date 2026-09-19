@@ -15,7 +15,6 @@ nvimrc/
 │   │   │   ├── window.lua        # ウィンドウ・タブ操作
 │   │   │   ├── lsp.lua           # LSP操作（定義ジャンプ、リネームなど）
 │   │   │   ├── finder.lua        # ファイル検索（Telescope）
-│   │   │   ├── ai.lua            # AI統合（Claude Code）
 │   │   │   └── info.lua          # 情報表示（diagnostics、git）
 │   │   └── custom-command/  # カスタムコマンド
 │   │       ├── init.lua          # コマンド統合
@@ -28,7 +27,6 @@ nvimrc/
 │       ├── ui.lua           # UI関連
 │       ├── editor.lua       # 編集機能
 │       ├── navigation.lua   # ナビゲーション
-│       └── ai.lua           # AI統合（claude-code-nvim）
 └── snippets/                # LuaSnipスニペット定義
     ├── lua.lua
     ├── nix.lua
