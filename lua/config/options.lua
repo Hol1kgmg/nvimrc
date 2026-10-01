@@ -36,3 +36,10 @@ opt.shell = "zsh"              -- ターミナルでzshを使用
 -- その他
 opt.clipboard = "unnamedplus"  -- システムクリップボードを使用
 opt.mouse = "a"                -- マウスサポート
+
+-- IME (macism が必要)
+vim.api.nvim_create_autocmd("InsertLeave", {
+  callback = function()
+    vim.fn.jobstart({ "macism", "com.apple.keylayout.ABC" })
+  end,
+})
