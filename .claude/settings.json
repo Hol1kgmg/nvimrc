@@ -1,4 +1,5 @@
 {
+  "language": "japanese",
   "hooks": {
     "SessionStart": [
       {
@@ -17,11 +18,19 @@
     "allow": [
       "Bash(git *)",
       "Bash(gh *)",
-      "Bash(task *)",
-      "Bash(make *)",
+      "Bash(just *)",
       "Bash(which *)",
       "Bash(type *)",
       "Bash(tree *)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(sed:*)",
+      "Bash(awk:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(curl *)",
       "WebFetch",
       "WebSearch",
       "Write",
@@ -29,8 +38,11 @@
     ],
     "deny": []
   },
+  "env": {
+    "CLAUDE_CODE_THRIFTY_SONIC": false
+  },
   "statusLine": {
     "type": "command",
-    "command": "$CLAUDE_PROJECT_DIR/statusline.sh"
+    "command": "$CLAUDE_PROJECT_DIR/.claude/statusline.sh"
   }
 }

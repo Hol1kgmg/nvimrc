@@ -1,6 +1,5 @@
 #!/bin/bash
 # 標準入力からJSON形式のデータを読み込む
-# chmod +x .claude/statusline.sh を実行
 input=$(cat)
 
 # 各種情報を取得
