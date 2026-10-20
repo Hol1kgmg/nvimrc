@@ -47,12 +47,15 @@ return {
       end,
     })
 
-    vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
+    -- alpha表示中、またはlistedバッファがターミナル1つだけのときはタブラインを隠す
+    vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "BufAdd", "BufDelete", "TermOpen" }, {
       group = augroup,
       callback = function()
-        if vim.bo.filetype ~= "alpha" then
-          vim.opt.showtabline = 2
-        end
+        vim.schedule(function()
+          local listed = vim.fn.getbufinfo({ buflisted = 1 })
+          local lone_term = #listed == 1 and vim.bo[listed[1].bufnr].buftype == "terminal"
+          vim.o.showtabline = (vim.bo.filetype == "alpha" or lone_term) and 0 or 2
+        end)
       end,
     })
 
@@ -62,12 +65,17 @@ return {
       group = augroup,
       callback = function()
         local buf = vim.api.nvim_get_current_buf()
-        if vim.fn.expand("%") == ""
-          and vim.bo.buftype == ""
-          and vim.bo.modified == false
-          and vim.fn.line("$") == 1
-          and vim.fn.getline(1) == ""
-        then
+        -- :terminal 等が作った直後の空バッファを横取りしないよう、コマンド完了後に判定する
+        vim.schedule(function()
+          if buf ~= vim.api.nvim_get_current_buf()
+            or vim.api.nvim_buf_get_name(buf) ~= ""
+            or vim.bo[buf].buftype ~= ""
+            or vim.bo[buf].modified
+            or vim.api.nvim_buf_line_count(buf) ~= 1
+            or vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] ~= ""
+          then
+            return
+          end
           require("alpha").start(false)
           -- alpha描画完了後に空バッファを削除（先に削除するとalphaと競合する）
           vim.schedule(function()
@@ -75,7 +83,7 @@ return {
               vim.api.nvim_buf_delete(buf, { force = true })
             end
           end)
-        end
+        end)
       end,
     })
 
